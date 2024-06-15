@@ -1,5 +1,7 @@
 torch
 transformers
+librosa
 streamlit
 pandas
 numpy
+matplotlib
