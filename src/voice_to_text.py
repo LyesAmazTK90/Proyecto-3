@@ -8,4 +8,5 @@ def transcribe_audio(file_path, processor, model):
         logits = model(input_values).logits
     predicted_ids = torch.argmax(logits, dim=-1)
     transcription = processor.decode(predicted_ids[0])
+    transcription = transcription.lower().capitalize()
     return transcription

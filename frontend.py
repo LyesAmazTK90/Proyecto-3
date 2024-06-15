@@ -1,6 +1,6 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
+from src.voice_to_text import transcribe_audio
+from src.streamlit_helpers import get_processor, get_model
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -50,12 +50,16 @@ with c3:
 # Asegurar que se haya subido correctamente
 if uploaded_file is not None:
 
+    # Cargar modelos y procesadores
+    processor = get_processor()
+    model = get_model()
+
     with c1:
         # Borrar placeholder
         placeholder1.empty()
 
         # Transcripcion
-        transcription = "Output of Transcription Functionality" #transcribe_audio(uploaded_file)
+        transcription = transcribe_audio(uploaded_file, processor, model)
         c1.write(transcription)
 
     with c2:
