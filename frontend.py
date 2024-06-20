@@ -1,6 +1,6 @@
 import streamlit as st
-from src.voice_to_text import transcribe_audio
-from src.streamlit_helpers import get_processor, get_model
+from src.voice_to_text import transcribe_audio, analyze_tone
+from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -52,14 +52,15 @@ if uploaded_file is not None:
 
     # Cargar modelos y procesadores
     processor = get_processor()
-    model = get_model()
+    transcription_model = get_transcription_model()
+    voice_sentiment_model = get_voice_sentiment_model('model.json')
 
     with c1:
         # Borrar placeholder
         placeholder1.empty()
 
         # Transcripcion
-        transcription = transcribe_audio(uploaded_file, processor, model)
+        transcription = transcribe_audio(uploaded_file, processor, transcription_model)
         c1.write(transcription)
 
     with c2:
@@ -67,7 +68,7 @@ if uploaded_file is not None:
         placeholder2.empty()
 
         # Analisis de tono
-        tone = "Output of Tone Analyzer" #analyze_tone(uploaded_file)
+        tone = analyze_tone(uploaded_file)
 
         if tone == "enfado":
             st.image("emojis/angry.png")
@@ -76,6 +77,7 @@ if uploaded_file is not None:
         elif tone == "alegría":
             st.image("emojis/happy.png")
         else:
+            st.write("Tono:", tone)
             st.write("Tono no reconocido")
 
     with c3:
