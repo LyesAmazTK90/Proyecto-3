@@ -1,5 +1,5 @@
 import streamlit as st
-from src.voice_to_text import transcribe_audio, analyze_tone
+from src.audio import transcribe_audio, analyze_tone
 from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
 
 st.set_page_config(
