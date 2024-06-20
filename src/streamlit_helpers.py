@@ -35,5 +35,4 @@ def get_voice_sentiment_model(model_config_json):
     # evaluate loaded model on test data
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
-    #TODO: Add label encoder here to get a coherent output (not numerical)
     return model

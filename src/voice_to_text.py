@@ -33,4 +33,6 @@ def analyze_tone(file, model):
                          batch_size=32, 
                          verbose=1)
     
+    #TODO: Add label encoder here to get a coherent output (not numerical)
+
     return preds
