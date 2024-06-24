@@ -1,7 +1,7 @@
 
 import streamlit as st
 from keras.models import model_from_json
-from keras.optimizers import RMSprop
+from keras.optimizers import Adam
 from keras.utils import to_categorical
 from sklearn.preprocessing import LabelEncoder
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
@@ -31,7 +31,7 @@ def get_voice_sentiment_model(model_config_json):
     print("Loaded model from disk")
     
     # Definir el optimizador correctamente - igual que al entrenar el modelo
-    opt = RMSprop(learning_rate=0.00001, decay=1e-6)
+    opt = Adam(learning_rate=0.001)
 
     # evaluate loaded model on test data
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
