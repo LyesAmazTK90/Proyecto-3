@@ -50,25 +50,28 @@ with c3:
 # Asegurar que se haya subido correctamente
 if uploaded_file is not None:
 
-    # Cargar modelos y procesadores
-    processor = get_processor()
-    transcription_model = get_transcription_model()
-    voice_sentiment_model = get_voice_sentiment_model('model.json')
-
     with c1:
         # Borrar placeholder
         placeholder1.empty()
 
+        # Cargar modelos y procesadores
+        processor = get_processor()
+        transcription_model = get_transcription_model()
+
         # Transcripcion
         transcription = transcribe_audio(uploaded_file, processor, transcription_model)
+        
         c1.write(transcription)
 
     with c2:
         # Borrar placeholder
         placeholder2.empty()
 
+        # Cargar modelo
+        voice_sentiment_model = get_voice_sentiment_model('model.json')
+
         # Analisis de tono
-        tone = analyze_tone(uploaded_file)
+        tone = analyze_tone(uploaded_file, voice_sentiment_model)
 
         if tone == "enfado":
             st.image("emojis/angry.png")
