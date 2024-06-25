@@ -68,10 +68,12 @@ if uploaded_file is not None:
         placeholder2.empty()
 
         # Cargar modelo
-        voice_sentiment_model = get_voice_sentiment_model('model.json')
+        voice_sentiment_model = get_voice_sentiment_model('model.json', "saved_models/Emotion_Voice_Detection_Model_test2.h5")
 
         # Analisis de tono
         tone = analyze_tone(uploaded_file, voice_sentiment_model)
+
+        st.write("Tono:", tone)
 
         if tone == "enfado":
             st.image("emojis/angry.png")
@@ -79,14 +81,14 @@ if uploaded_file is not None:
             st.image("emojis/neutral.png")
         elif tone == "alegría":
             st.image("emojis/happy.png")
-        else:
-            st.write("Tono:", tone)
-            st.write("Tono no reconocido")
 
     with c3:
         # Borrar placeholder
         placeholder3.empty()
         
+        # text_sentiment_model = get_text_sentiment_model()
+
         # Analisis de texto
-        text_analysis = "Output of Text Analyzer" #analyze_text(transcription)
+        text_analysis = "Output of Text Analyzer" #analyze_text(text_sentiment_model)
+
         st.write(text_analysis)

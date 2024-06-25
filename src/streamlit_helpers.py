@@ -20,14 +20,14 @@ def get_transcription_model():
 
 
 @st.cache_resource
-def get_voice_sentiment_model(model_config_json):
+def get_voice_sentiment_model(model_config_json, model_weights_h5_file):
     with open(model_config_json, 'r') as json_file:
         loaded_model_json = json_file.read()
 
     model = model_from_json(loaded_model_json)
     
     # Se cargan las métricas en el modelo:
-    model.load_weights("saved_models/Emotion_Voice_Detection_Model_test2.h5")
+    model.load_weights(model_weights_h5_file)
     print("Loaded model from disk")
     
     # Definir el optimizador correctamente - igual que al entrenar el modelo

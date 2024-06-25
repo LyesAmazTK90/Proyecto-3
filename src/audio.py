@@ -44,11 +44,12 @@ def analyze_tone(file, model):
     mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=13), axis=0)
 
     # Transformar para conformar al formato del CNN
-    df = pd.DataFrame(mfccs, columns=['feature'])
-    df2 = pd.DataFrame(df['feature'].values.tolist())
-    df2 = df2.fillna(0)
+    df = pd.DataFrame(mfccs, columns=['feature']).T
 
-    X = np.array(df2)
+    df = df.fillna(0)
+
+    X = np.array(df)
+
     X_cnn = np.expand_dims(X, axis=2)
 
     # Prediccion
@@ -56,6 +57,12 @@ def analyze_tone(file, model):
                          batch_size=32, 
                          verbose=1)
     
-    #TODO: Add label encoder here to get a coherent output (not numerical)
+    most_likely_emotion = preds.argmax(axis=1)
+    
+    emotion_pred_num = most_likely_emotion.astype(int).flatten()
 
-    return preds
+    emotions_list = ['female_angry', 'female_disgust', 'female_fear', 'female_happy', 'female_neutral', 'female_sad', 'female_surprised', 'male_angry', 'male_disgust', 'male_fear', 'male_happy', 'male_neutral', 'male_sad', 'male_surprised']
+
+    emotion_pred = emotions_list[emotion_pred_num[0]]
+
+    return emotion_pred
