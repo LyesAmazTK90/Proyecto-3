@@ -5,3 +5,6 @@ streamlit
 pandas
 numpy
 matplotlib
+keras
+tensorflow
+resampy

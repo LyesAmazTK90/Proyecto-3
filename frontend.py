@@ -1,6 +1,6 @@
 import streamlit as st
-from src.voice_to_text import transcribe_audio
-from src.streamlit_helpers import get_processor, get_model
+from src.audio import transcribe_audio, analyze_tone
+from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -50,24 +50,30 @@ with c3:
 # Asegurar que se haya subido correctamente
 if uploaded_file is not None:
 
-    # Cargar modelos y procesadores
-    processor = get_processor()
-    model = get_model()
-
     with c1:
         # Borrar placeholder
         placeholder1.empty()
 
+        # Cargar modelos y procesadores
+        processor = get_processor()
+        transcription_model = get_transcription_model()
+
         # Transcripcion
-        transcription = transcribe_audio(uploaded_file, processor, model)
+        transcription = transcribe_audio(uploaded_file, processor, transcription_model)
+        
         c1.write(transcription)
 
     with c2:
         # Borrar placeholder
         placeholder2.empty()
 
+        # Cargar modelo
+        voice_sentiment_model = get_voice_sentiment_model('model.json', "saved_models/Emotion_Voice_Detection_Model_test2.h5")
+
         # Analisis de tono
-        tone = "Output of Tone Analyzer" #analyze_tone(uploaded_file)
+        tone = analyze_tone(uploaded_file, voice_sentiment_model)
+
+        st.write("Tono:", tone)
 
         if tone == "enfado":
             st.image("emojis/angry.png")
@@ -75,13 +81,14 @@ if uploaded_file is not None:
             st.image("emojis/neutral.png")
         elif tone == "alegría":
             st.image("emojis/happy.png")
-        else:
-            st.write("Tono no reconocido")
 
     with c3:
         # Borrar placeholder
         placeholder3.empty()
         
+        # text_sentiment_model = get_text_sentiment_model()
+
         # Analisis de texto
-        text_analysis = "Output of Text Analyzer" #analyze_text(transcription)
+        text_analysis = "Output of Text Analyzer" #analyze_text(text_sentiment_model)
+
         st.write(text_analysis)
