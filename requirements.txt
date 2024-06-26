@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 absl-py==2.1.0
 altair==5.3.0
 asttokens==2.4.1
@@ -126,3 +127,15 @@ wcwidth==0.2.13
 Werkzeug==3.0.3
 wheel==0.43.0
 wrapt==1.16.0
+=======
+torch
+transformers
+librosa
+streamlit
+pandas
+numpy
+matplotlib
+keras
+tensorflow
+resampy
+>>>>>>> 760c1c8ec793b20973c5e4f45cfa71cee690f8ca
