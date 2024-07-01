@@ -90,7 +90,7 @@ if uploaded_file is not None:
         # Borrar placeholder
         placeholder3.empty()
         
-        tokenizer = get_tokenizer('Tokenizer.pkl')
+        tokenizer = get_tokenizer('saved_models/tokenizer.pkl')
         text_sentiment_model = get_text_sentiment_model('saved_models/sentiment_model.sav')
 
         # Analisis de texto
