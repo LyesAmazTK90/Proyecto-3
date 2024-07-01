@@ -79,12 +79,23 @@ if uploaded_file is not None:
 
         st.write("Tono:", tone)
 
-        if tone == "enfado":
-            st.image("emojis/angry.png")
-        elif tone == "neutral":
-            st.image("emojis/neutral.png")
-        elif tone == "alegría":
-            st.image("emojis/happy.png")
+        img_width = 150
+        emotion = tone.split("_")[1]
+
+        if emotion == "angry":
+            st.image("emojis/angry.png", width=img_width)
+        elif emotion == "disgust":
+            st.image("emojis/disgust.jpeg", width=img_width)
+        elif emotion == "fear":
+            st.image("emojis/fear.jpeg", width=img_width)
+        elif emotion == "happy":
+            st.image("emojis/happy.jpeg", width=img_width)
+        elif emotion == "neutral":
+            st.image("emojis/neutral.png", width=img_width)
+        elif emotion == "sad":
+            st.image("emojis/sad.png", width=img_width)
+        elif emotion == "surprised":
+            st.image("emojis/surpirsed.png", width=img_width)
 
     with c3:
         # Borrar placeholder
