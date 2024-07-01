@@ -1,6 +1,10 @@
 import streamlit as st
-from src.audio import transcribe_audio, analyze_tone
-from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
+from src.audio import transcribe_audio, analyze_tone, analyze_text
+from src.streamlit_helpers import   get_processor,\
+                                    get_transcription_model,\
+                                    get_voice_sentiment_model,\
+                                    get_text_sentiment_model,\
+                                    get_tokenizer
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -86,9 +90,11 @@ if uploaded_file is not None:
         # Borrar placeholder
         placeholder3.empty()
         
-        # text_sentiment_model = get_text_sentiment_model()
+        tokenizer = get_tokenizer('Tokenizer.pkl')
+        text_sentiment_model = get_text_sentiment_model('Modelo de prediccion de sentimiento en texto.sav')
 
         # Analisis de texto
-        text_analysis = "Output of Text Analyzer" #analyze_text(text_sentiment_model)
+        num_value, text_sentiment = analyze_text(transcription, tokenizer, text_sentiment_model)
 
-        st.write(text_analysis)
+        st.write(f"Valor numerico: {num_value}")
+        st.write(text_sentiment)
