@@ -8,3 +8,5 @@ matplotlib
 keras
 tensorflow
 resampy
+soundfile
+audio-recorder-streamlit
