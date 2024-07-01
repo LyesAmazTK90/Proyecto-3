@@ -1,6 +1,10 @@
 import streamlit as st
-from src.audio import transcribe_audio, analyze_tone
-from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
+from src.audio import transcribe_audio, analyze_tone, analyze_text
+from src.streamlit_helpers import   get_processor,\
+                                    get_transcription_model,\
+                                    get_voice_sentiment_model,\
+                                    get_text_sentiment_model,\
+                                    get_tokenizer
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -68,7 +72,7 @@ if uploaded_file is not None:
         placeholder2.empty()
 
         # Cargar modelo
-        voice_sentiment_model = get_voice_sentiment_model('model.json', "saved_models/Emotion_Voice_Detection_Model_test2.h5")
+        voice_sentiment_model = get_voice_sentiment_model('saved_models/voice_tone_model.json', "saved_models/Emotion_Voice_Detection_Model_test2.h5")
 
         # Analisis de tono
         tone = analyze_tone(uploaded_file, voice_sentiment_model)
@@ -86,9 +90,11 @@ if uploaded_file is not None:
         # Borrar placeholder
         placeholder3.empty()
         
-        # text_sentiment_model = get_text_sentiment_model()
+        tokenizer = get_tokenizer('saved_models/tokenizer.pkl')
+        text_sentiment_model = get_text_sentiment_model('saved_models/sentiment_model.sav')
 
         # Analisis de texto
-        text_analysis = "Output of Text Analyzer" #analyze_text(text_sentiment_model)
+        num_value, text_sentiment = analyze_text(transcription, tokenizer, text_sentiment_model)
 
-        st.write(text_analysis)
+        st.write(f"Valor numerico: {num_value}")
+        st.write(text_sentiment)
