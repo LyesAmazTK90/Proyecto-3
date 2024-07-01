@@ -178,7 +178,7 @@ if uploaded_file is not None or os.path.isfile(TEMP_WAVE_OUTPUT_FILENAME):
         elif emotion == "sad":
             st.image("emojis/sad.png", width=img_width)
         elif emotion == "surprised":
-            st.image("emojis/surpirsed.png", width=img_width)
+            st.image("emojis/surprised.png", width=img_width)
 
     with c3:
         # Borrar placeholder
