@@ -1,6 +1,10 @@
 import streamlit as st
-from src.audio import transcribe_audio, analyze_tone
-from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
+from src.audio import transcribe_audio, analyze_tone, analyze_text
+from src.streamlit_helpers import   get_processor,\
+                                    get_transcription_model,\
+                                    get_voice_sentiment_model,\
+                                    get_text_sentiment_model,\
+                                    get_tokenizer
 from streamlit_webrtc import webrtc_streamer, ClientSettings, WebRtcMode, VideoProcessorBase
 
 st.set_page_config(
@@ -95,20 +99,33 @@ if uploaded_file is not None:
 
         st.write("Tono:", tone)
 
-        if tone == "enfado":
-            st.image("emojis/angry.png")
-        elif tone == "neutral":
-            st.image("emojis/neutral.png")
-        elif tone == "alegría":
-            st.image("emojis/happy.png")
+        img_width = 150
+        emotion = tone.split("_")[1]
+
+        if emotion == "angry":
+            st.image("emojis/angry.png", width=img_width)
+        elif emotion == "disgust":
+            st.image("emojis/disgust.jpeg", width=img_width)
+        elif emotion == "fear":
+            st.image("emojis/fear.jpeg", width=img_width)
+        elif emotion == "happy":
+            st.image("emojis/happy.jpeg", width=img_width)
+        elif emotion == "neutral":
+            st.image("emojis/neutral.png", width=img_width)
+        elif emotion == "sad":
+            st.image("emojis/sad.png", width=img_width)
+        elif emotion == "surprised":
+            st.image("emojis/surpirsed.png", width=img_width)
 
     with c3:
         # Borrar placeholder
         placeholder3.empty()
         
-        # text_sentiment_model = get_text_sentiment_model()
+        tokenizer = get_tokenizer('Tokenizer.pkl')
+        text_sentiment_model = get_text_sentiment_model('Modelo de prediccion de sentimiento en texto.sav')
 
         # Analisis de texto
-        text_analysis = "Output of Text Analyzer" #analyze_text(transcription, text_sentiment_model)
+        num_value, text_sentiment = analyze_text(transcription, tokenizer, text_sentiment_model)
 
-        st.write(text_analysis)
+        st.write(f"Valor numerico: {num_value}")
+        st.write(text_sentiment)

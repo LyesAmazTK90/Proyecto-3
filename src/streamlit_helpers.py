@@ -1,4 +1,4 @@
-
+import pickle
 import streamlit as st
 from keras.models import model_from_json
 from keras.optimizers import Adam
@@ -37,3 +37,15 @@ def get_voice_sentiment_model(model_config_json, model_weights_h5_file):
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
+
+
+@st.cache_resource
+def get_text_sentiment_model(model_sav):
+    model = pickle.load(open(model_sav, 'rb'))
+    return model
+
+
+@st.cache_resource
+def get_tokenizer(tokenizer_pkl):
+    tokenizer = pickle.load(open(tokenizer_pkl, 'rb'))
+    return tokenizer

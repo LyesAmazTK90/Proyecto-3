@@ -3,6 +3,7 @@ import librosa
 import pandas as pd
 import numpy as np
 from io import BufferedIOBase
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
 def reset_buffer(func):
@@ -58,7 +59,7 @@ def analyze_tone(file, model):
                          verbose=1)
     
     most_likely_emotion = preds.argmax(axis=1)
-    
+
     emotion_pred_num = most_likely_emotion.astype(int).flatten()
 
     emotions_list = ['female_angry', 'female_disgust', 'female_fear', 'female_happy', 'female_neutral', 'female_sad', 'female_surprised', 'male_angry', 'male_disgust', 'male_fear', 'male_happy', 'male_neutral', 'male_sad', 'male_surprised']
@@ -66,3 +67,19 @@ def analyze_tone(file, model):
     emotion_pred = emotions_list[emotion_pred_num[0]]
 
     return emotion_pred
+
+
+def analyze_text(text, tokenizer, text_sentiment_model):
+    sequences = tokenizer.texts_to_sequences([text])
+    padded_sequences = pad_sequences(sequences, maxlen= 30)
+    prediction = text_sentiment_model.predict(padded_sequences)
+    prediction_val = prediction[0][0]
+    
+    if prediction_val > 0.6:
+        sentiment = 'positive'
+    elif prediction_val >= 0.4:
+        sentiment = 'neutral'
+    else:
+        sentiment = 'negativo'
+
+    return prediction_val, sentiment
