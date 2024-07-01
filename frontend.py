@@ -1,6 +1,7 @@
 import streamlit as st
 from src.audio import transcribe_audio, analyze_tone
 from src.streamlit_helpers import get_processor, get_transcription_model, get_voice_sentiment_model
+from streamlit_webrtc import webrtc_streamer, ClientSettings, WebRtcMode, VideoProcessorBase
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -13,6 +14,25 @@ st.title("Transcripción y Análisis de Audio :microphone: :notes: :musical_note
 # Subir el archivo
 st.subheader("Sube tu archivo de audio WAV o MP3:")
 uploaded_file = st.file_uploader("Sube tu archivo de audio", type=["wav", "mp3"], label_visibility='hidden')
+
+# O graba tu propio audio
+st.write("O sube tu propio audio:")
+client_settings = ClientSettings(
+    rtc_configuration={"iceServers": [
+        {"urls": ["stun:stun.l.google.com:19302"]}
+        ]}, 
+    media_stream_constraints={"audio": True, "video": False}
+)
+
+webrtc_ctx = webrtc_streamer(
+    key="audio-recorder", 
+    mode=WebRtcMode.SENDRECV, 
+    client_settings=client_settings
+) 
+
+if webrtc_ctx.state.playing: 
+    audio_processor = AudioProcessor() 
+    audio_processor.process(webrtc_ctx)
 
 # Crear columnas para separar contenido y componentes
 c1, c2, c3 = st.columns(3)
@@ -89,6 +109,6 @@ if uploaded_file is not None:
         # text_sentiment_model = get_text_sentiment_model()
 
         # Analisis de texto
-        text_analysis = "Output of Text Analyzer" #analyze_text(text_sentiment_model)
+        text_analysis = "Output of Text Analyzer" #analyze_text(transcription, text_sentiment_model)
 
         st.write(text_analysis)
