@@ -92,7 +92,7 @@ if uploaded_file is not None:
         placeholder2.empty()
 
         # Cargar modelo
-        voice_sentiment_model = get_voice_sentiment_model('model.json', "saved_models/Emotion_Voice_Detection_Model_test2.h5")
+        voice_sentiment_model = get_voice_sentiment_model('saved_models/voice_tone_model.json', "saved_models/Emotion_Voice_Detection_Model_test2.h5")
 
         # Analisis de tono
         tone = analyze_tone(uploaded_file, voice_sentiment_model)
@@ -121,8 +121,8 @@ if uploaded_file is not None:
         # Borrar placeholder
         placeholder3.empty()
         
-        tokenizer = get_tokenizer('Tokenizer.pkl')
-        text_sentiment_model = get_text_sentiment_model('Modelo de prediccion de sentimiento en texto.sav')
+        tokenizer = get_tokenizer('saved_models/tokenizer.pkl')
+        text_sentiment_model = get_text_sentiment_model('saved_models/sentiment_model.sav')
 
         # Analisis de texto
         num_value, text_sentiment = analyze_text(transcription, tokenizer, text_sentiment_model)
