@@ -95,7 +95,7 @@ if uploaded_file is not None:
         elif emotion == "sad":
             st.image("emojis/sad.png", width=img_width)
         elif emotion == "surprised":
-            st.image("emojis/surpirsed.png", width=img_width)
+            st.image("emojis/surprised.png", width=img_width)
 
     with c3:
         # Borrar placeholder
@@ -105,7 +105,6 @@ if uploaded_file is not None:
         text_sentiment_model = get_text_sentiment_model('saved_models/sentiment_model.sav')
 
         # Analisis de texto
-        num_value, text_sentiment = analyze_text(transcription, tokenizer, text_sentiment_model)
+        text_sentiment = analyze_text(transcription, tokenizer, text_sentiment_model)
 
-        st.write(f"Valor numerico: {num_value}")
         st.write(text_sentiment)

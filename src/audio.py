@@ -76,10 +76,10 @@ def analyze_text(text, tokenizer, text_sentiment_model):
     prediction_val = prediction[0][0]
     
     if prediction_val > 0.6:
-        sentiment = 'positive'
+        sentiment = 'Positive'
     elif prediction_val >= 0.4:
-        sentiment = 'neutral'
+        sentiment = 'Neutral'
     else:
-        sentiment = 'negativo'
+        sentiment = 'Negativo'
 
-    return prediction_val, sentiment
+    return sentiment
