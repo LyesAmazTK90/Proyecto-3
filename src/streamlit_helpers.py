@@ -3,7 +3,6 @@ import streamlit as st
 from keras.models import model_from_json
 from keras.optimizers import Adam
 from keras.utils import to_categorical
-from sklearn.preprocessing import LabelEncoder
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 
 
