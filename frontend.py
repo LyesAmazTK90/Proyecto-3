@@ -1,3 +1,8 @@
+import pyaudio
+import wave
+import time
+import os.path
+from threading import Thread
 import streamlit as st
 from src.audio import transcribe_audio, analyze_tone, analyze_text
 from src.streamlit_helpers import   get_processor,\
@@ -5,6 +10,8 @@ from src.streamlit_helpers import   get_processor,\
                                     get_voice_sentiment_model,\
                                     get_text_sentiment_model,\
                                     get_tokenizer
+from audio_recorder_streamlit import audio_recorder
+
 
 st.set_page_config(
         page_title="Tone Analyzer",
@@ -17,6 +24,82 @@ st.title("Transcripción y Análisis de Audio :microphone: :notes: :musical_note
 # Subir el archivo
 st.subheader("Sube tu archivo de audio WAV o MP3:")
 uploaded_file = st.file_uploader("Sube tu archivo de audio", type=["wav", "mp3"], label_visibility='hidden')
+
+# O graba tu propio audio
+st.subheader("O sube tu propio audio:")
+
+# Se configuran los parámetros de audio:
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 48000
+RECORD_SECONDS = 10
+TEMP_WAVE_OUTPUT_FILENAME = "Temp_audio_rec.wav"
+
+# Variables de control de grabación:
+recording = False
+p = None
+
+# Función para grabar el audio:
+def record_audio():
+    global recording, p
+    p = pyaudio.PyAudio()
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    input=True,
+                    frames_per_buffer=CHUNK)
+
+    frames = []
+    start_time = time.time()
+
+    st.write("* Start Recording")
+
+    while recording and (time.time() - start_time) < RECORD_SECONDS:
+        data = stream.read(CHUNK)
+        frames.append(data)
+
+    st.write("* Stop Recording")
+
+    stream.stop_stream()
+    stream.close()
+
+    wf = wave.open(TEMP_WAVE_OUTPUT_FILENAME, 'wb')
+    wf.setnchannels(CHANNELS)
+    wf.setsampwidth(pyaudio.PyAudio().get_sample_size(FORMAT))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(frames))
+    wf.close()
+
+    p.terminate()
+    p = None
+    
+    st.success("Recording finished. The audio has been saved.")
+
+# Función para manejar el botón start recording:
+def start_recording():
+    global recording
+    recording = True
+    record_thread = Thread(target=record_audio)
+    record_thread.start()
+    st.session_state["status"] = "Recording..."
+
+# Función para manejar el botón stop recording:
+def stop_recording():
+    global recording
+    recording = False
+    st.session_state["status"] = "Recording stopped. Processing audio..."
+
+if "status" not in st.session_state:
+    st.session_state["status"] = ""
+
+if st.button("Start Recording"):
+    start_recording()
+
+if st.button("Stop Recording"):
+    stop_recording()
+
+st.write(st.session_state["status"])
 
 # Crear columnas para separar contenido y componentes
 c1, c2, c3 = st.columns(3)
@@ -52,8 +135,8 @@ with c3:
         st.write(no_result_message)
 
 # Asegurar que se haya subido correctamente
-if uploaded_file is not None:
-
+if uploaded_file is not None or os.path.isfile(TEMP_WAVE_OUTPUT_FILENAME):
+    uploaded_file = TEMP_WAVE_OUTPUT_FILENAME
     with c1:
         # Borrar placeholder
         placeholder1.empty()
@@ -109,3 +192,6 @@ if uploaded_file is not None:
 
         st.write(f"Valor numerico: {num_value}")
         st.write(text_sentiment)
+
+    if os.path.isfile(TEMP_WAVE_OUTPUT_FILENAME):
+        os.remove(TEMP_WAVE_OUTPUT_FILENAME)
