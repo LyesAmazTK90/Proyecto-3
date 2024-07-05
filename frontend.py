@@ -97,7 +97,7 @@ with c3:
     placeholder7 = st.empty()
     with placeholder7.container():
         # Subtitulo
-        st.subheader("Text Analysis:")
+        st.subheader("Combined Analysis:")
         st.write(no_result_message)
 
 if uploaded_file:
