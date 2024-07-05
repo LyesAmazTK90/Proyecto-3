@@ -1,11 +1,7 @@
 torch
 transformers
 librosa
-<<<<<<< HEAD
-streamlit ==1.30
-=======
 streamlit==1.30
->>>>>>> 3d590950be48db8e9c9f27d6094d30006bb8033c
 pandas
 numpy
 matplotlib
