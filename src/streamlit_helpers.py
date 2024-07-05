@@ -48,3 +48,37 @@ def get_text_sentiment_model(model_sav):
 def get_tokenizer(tokenizer_pkl):
     tokenizer = pickle.load(open(tokenizer_pkl, 'rb'))
     return tokenizer
+
+
+def get_combined_sentiment(emotion, text_sentiment):
+    # Se crea diccionario con las combinaciones de "emotion" y "text_sentiment":
+    combinations = {
+        ("angry", "positive"): "sarcastic, most likely angry",
+        ("angry", "neutral"): "angry",
+        ("angry", "negative"): "angry",
+        ("disgust", "positive"): "ironic, most likely disgust",
+        ("disgust", "neutral"): "disgust",
+        ("disgust", "negative"): "disgust",
+        ("fear", "positive"): "surprise and likely fear",
+        ("fear", "neutral"): "fear",
+        ("fear", "negative"): "fear",
+        ("happy", "positive"): "happy",
+        ("happy", "neutral"): "happy",
+        ("happy", "negative"): "ironic, most likely happy",
+        ("neutral", "positive"): "neutral",
+        ("neutral", "neutral"): "neutral",
+        ("neutral", "negative"): "most likely neutral",
+        ("sad", "positive"): "disappointment, most likely sad",
+        ("sad", "neutral"): "sad",
+        ("sad", "negative"): "sad",
+        ("surprised", "positive"): "surprised",
+        ("surprised", "neutral"): "surprised",
+        ("surprised", "negative"): "Disbelief or disappointment and surprise",
+    }
+    
+    # Devolvemos el sentimiento combinado correspondiente:
+    if (emotion, text_sentiment) in combinations:
+        return combinations[(emotion, text_sentiment)]
+    else:
+        # Se devuelve un mensaje predeterminado si la combinación no está especificada:
+        return f"Unknown combination: {emotion}, {text_sentiment}"
