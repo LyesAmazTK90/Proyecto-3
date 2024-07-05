@@ -1,7 +1,7 @@
 torch
 transformers
 librosa
-streamlit
+streamlit==1.30
 pandas
 numpy
 matplotlib
@@ -10,3 +10,4 @@ tensorflow
 resampy
 soundfile
 audio-recorder-streamlit
+pyaudio
