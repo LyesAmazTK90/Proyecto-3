@@ -83,3 +83,38 @@ def analyze_text(text, tokenizer, text_sentiment_model):
         sentiment = 'Negativo'
 
     return sentiment
+
+
+def combined_sentiment(emotion, text_sentiment):
+    
+    # Se crea diccionario con las combinaciones de "emotion" y "text_sentiment":
+    combinations = {
+        ("angry", "Positive"): "sarcastic, most likely angry",
+        ("angry", "Neutral"): "angry",
+        ("angry", "Negative"): "angry",
+        ("disgust", "Positive"): "ironic, most likely disgust",
+        ("disgust", "Neutral"): "disgust",
+        ("disgust", "Negative"): "disgust",
+        ("fear", "Positive"): "surprise and likely fear",
+        ("fear", "Neutral"): "fear",
+        ("fear", "Negative"): "fear",
+        ("happy", "Positive"): "happy",
+        ("happy", "Neutral"): "happy",
+        ("happy", "Negative"): "ironic, most likely happy",
+        ("Neutral", "Positive"): "neutral",
+        ("Neutral", "Neutral"): "neutral",
+        ("Neutral", "Negative"): "most likely neutral",
+        ("sad", "Positive"): "disappointment, most likely sad",
+        ("sad", "Neutral"): "sad",
+        ("sad", "Negative"): "sad",
+        ("surprised", "Positive"): "surprised",
+        ("surprised", "Neutral"): "surprised",
+        ("surprised", "Negative"): "Disbelief or disappointment and surprise",
+    }
+    
+    # Devolvemos el sentimiento combinado correspondiente:
+    if (emotion, text_sentiment) in combinations:
+        return combinations[(emotion, text_sentiment)]
+    else:
+        # Se devuelve un mensaje predeterminado si la combinación no está especificada:
+        return f"unknown combination:{emotion}, {text_sentiment}"
