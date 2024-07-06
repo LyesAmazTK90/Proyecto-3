@@ -224,9 +224,8 @@ if uploaded_file:
         # Subtitulo
         st.subheader("Audio Transcription:")
 
-        st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{
-                    transcription}</i></span>', unsafe_allow_html=True)
-
+        st.markdown(f"<span style='font-size: 18px; text-align: center; display: block;'><i>{transcription}</i></span>", unsafe_allow_html=True)
+        
         st.divider()
 
         # Borrar placeholder
