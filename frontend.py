@@ -224,8 +224,7 @@ if uploaded_file:
         # Subtitulo
         st.subheader("Audio Transcription:")
 
-        st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{
-                    transcription}</i></span>', unsafe_allow_html=True)
+        st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{transcription}</i></span>', unsafe_allow_html=True)
 
         st.divider()
 
@@ -249,19 +248,19 @@ if uploaded_file:
         
         #img_width = 150
 
-        if comb_result == "Angry":
+        if comb_result == "angry":
             image_path2 = "emojis/angry.png"
-        elif comb_result == "Disgust":
+        elif comb_result == "disgust":
             image_path2 = "emojis/disgust.png"
-        elif comb_result == "Fear":
+        elif comb_result == "fear":
             image_path2 = "emojis/fear.png"
-        elif comb_result == "Happy":
+        elif comb_result == "happy":
             image_path2 = "emojis/happy.png"
-        elif comb_result == "Neutral":
+        elif comb_result == "neutral":
             image_path2 = "emojis/neutral.png"
-        elif comb_result == "Sad":
+        elif comb_result == "sad":
             image_path2 = "emojis/sad.png"
-        elif comb_result == "Surprised":
+        elif comb_result == "surprised":
             image_path2 = "emojis/surprised.png"  # Original
         elif comb_result == "sarcastic, most likely angry":
             image_path2 = "emojis/sarcastic.png"
@@ -277,14 +276,14 @@ if uploaded_file:
             image_path2 = "emojis/dissapointment.png"
 
         # Función para cargar imagen en base64
-        def load_image(image_path2):
+        def load_image2(image_path2):
             with open(image_path2, "rb") as f:
                 image_data2 = f.read()
             encoded_image2 = base64.b64encode(image_data2).decode()
             return encoded_image2
 
         # Obtener la imagen en base64
-        encoded_image2 = load_image(image_path2)
+        encoded_image2 = load_image2(image_path2)
 
         # Agrega la imagen centrada en la tercera columna con tamaño 150px
         st.markdown(f"""<div style="display: flex; justify-content: center;">
@@ -292,8 +291,8 @@ if uploaded_file:
                     </div>""", unsafe_allow_html=True)
 
         #st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{comb_result}</i></span>', unsafe_allow_html=True)
-        
+        genre2 = genre.title()
         comb_result2 = comb_result.title()
-        st.markdown(f"<h3 style='text-align: center;'>{comb_result2}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{genre2} {comb_result2}</h3>", unsafe_allow_html=True)
 
         
