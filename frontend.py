@@ -42,7 +42,7 @@ with c1:
     # Que el usuario pueda escuchar lo que subió:
     if uploaded_file:
         st.audio(uploaded_file, format="audio/wav")
-
+        
     st.divider()
 
     # O graba tu propio audio
@@ -54,8 +54,8 @@ with c1:
         st.write(no_result_message)
 
     # Utilizando audio_recorder_streamlit
-    audio_bytes = audio_recorder(text="Click to record 5 seconds", recording_color="red", neutral_color="white",
-                                 icon_name="microphone-lines", icon_size="3x", energy_threshold=(-1.0, 1.0), pause_threshold=5.0,)
+    audio_bytes = audio_recorder(text="Click to record 4 seconds", recording_color="red", neutral_color="white",
+                                 icon_name="microphone-lines", icon_size="3x", energy_threshold=(-1.0, 1.0), pause_threshold=4.0,)
 
     # Que el usuario pueda escuchar lo que grabó:
     if audio_bytes:
@@ -224,8 +224,7 @@ if uploaded_file:
         # Subtitulo
         st.subheader("Audio Transcription:")
 
-        st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{
-                    transcription}</i></span>', unsafe_allow_html=True)
+        st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{transcription}</i></span>', unsafe_allow_html=True)
 
         st.divider()
 
@@ -275,6 +274,8 @@ if uploaded_file:
             image_path2 = "emojis/neutral.png"
         elif comb_result == "disappointment, most likely sad":
             image_path2 = "emojis/dissapointment.png"
+        elif comb_result == "disbelief or disappointment and surprise":
+            image_path2 = "emojis/dissapointment.png"
 
         # Función para cargar imagen en base64
         def load_image2(image_path2):
@@ -295,5 +296,3 @@ if uploaded_file:
         genre2 = genre.title()
         comb_result2 = comb_result.title()
         st.markdown(f"<h3 style='text-align: center;'>{genre2} {comb_result2}</h3>", unsafe_allow_html=True)
-
-        
