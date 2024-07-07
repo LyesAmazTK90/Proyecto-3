@@ -44,9 +44,7 @@ with c1:
 
     # Que el usuario pueda escuchar lo que subió:
     if uploaded_file:
-        audio_bytes = uploaded_file.read()  # Leer bytes del archivo subido
-        st.audio(audio_bytes, format="audio/wav")
-        processed = False  # Resetea el estado de procesamiento
+        st.audio(uploaded_file, format="audio/wav")
 
     st.divider()
 
@@ -59,8 +57,8 @@ with c1:
         st.write(no_result_message)
 
     # Utilizando audio_recorder_streamlit
-    audio_bytes_new = audio_recorder(text="Click to record 5 seconds", recording_color="red", neutral_color="white",
-                                     icon_name="microphone-lines", icon_size="3x", energy_threshold=(-1.0, 1.0), pause_threshold=5.0)
+    audio_bytes = audio_recorder(text="Click to record 5 seconds", recording_color="red", neutral_color="white",
+                                 icon_name="microphone-lines", icon_size="3x", energy_threshold=(-1.0, 1.0), pause_threshold=5.0,)
 
     # Que el usuario pueda escuchar lo que grabó:
     if audio_bytes_new:
@@ -192,7 +190,8 @@ if audio_bytes:
             # Subtitulo
             st.subheader("Audio Transcription:")
 
-            st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{transcription}</i></span>', unsafe_allow_html=True)
+        st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{
+                    transcription}</i></span>', unsafe_allow_html=True)
 
             st.divider()
 
@@ -216,32 +215,32 @@ if audio_bytes:
             
             # img_width = 150
 
-            if comb_result == "angry":
-                image_path2 = "emojis/angry.png"
-            elif comb_result == "disgust":
-                image_path2 = "emojis/disgust.png"
-            elif comb_result == "fear":
-                image_path2 = "emojis/fear.png"
-            elif comb_result == "happy":
-                image_path2 = "emojis/happy.png"
-            elif comb_result == "neutral":
-                image_path2 = "emojis/neutral.png"
-            elif comb_result == "sad":
-                image_path2 = "emojis/sad.png"
-            elif comb_result == "surprised":
-                image_path2 = "emojis/surprised.png"  # Original
-            elif comb_result == "sarcastic, most likely angry":
-                image_path2 = "emojis/sarcastic.png"
-            elif comb_result == "ironic, most likely disgust":
-                image_path2 = "emojis/sarcastic.png"
-            elif comb_result == "ironic, most likely happy":
-                image_path2 = "emojis/sarcastic.png"
-            elif comb_result == "surprise and likely fear":
-                image_path2 = "emojis/surprised.png"
-            elif comb_result == "most likely neutral":
-                image_path2 = "emojis/neutral.png"
-            elif comb_result == "disappointment, most likely sad":
-                image_path2 = "emojis/dissapointment.png"
+        if comb_result == "angry":
+            image_path2 = "emojis/angry.png"
+        elif comb_result == "disgust":
+            image_path2 = "emojis/disgust.png"
+        elif comb_result == "fear":
+            image_path2 = "emojis/fear.png"
+        elif comb_result == "happy":
+            image_path2 = "emojis/happy.png"
+        elif comb_result == "neutral":
+            image_path2 = "emojis/neutral.png"
+        elif comb_result == "sad":
+            image_path2 = "emojis/sad.png"
+        elif comb_result == "surprised":
+            image_path2 = "emojis/surprised.png"  # Original
+        elif comb_result == "sarcastic, most likely angry":
+            image_path2 = "emojis/sarcastic.png"
+        elif comb_result == "ironic, most likely disgust":
+            image_path2 = "emojis/sarcastic.png"
+        elif comb_result == "ironic, most likely happy":
+            image_path2 = "emojis/sarcastic.png"
+        elif comb_result == "surprise and likely fear":
+            image_path2 = "emojis/surprised.png"
+        elif comb_result == "most likely neutral":
+            image_path2 = "emojis/neutral.png"
+        elif comb_result == "disappointment, most likely sad":
+            image_path2 = "emojis/dissapointment.png"
 
             # Función para cargar imagen en base64
             def load_image2(image_path2):
@@ -258,6 +257,9 @@ if audio_bytes:
                         <img src="data:image/png;base64,{encoded_image2}" style="width: 150px; height: auto;">
                         </div>""", unsafe_allow_html=True)
 
-            genre2 = genre.title()
-            comb_result2 = comb_result.title()
-            st.markdown(f"<h3 style='text-align: center;'>{genre2} {comb_result2}</h3>", unsafe_allow_html=True)
+        #st.markdown(f'<span style="font-size: 18px; text-align: center; display: block"><i>{comb_result}</i></span>', unsafe_allow_html=True)
+        genre2 = genre.title()
+        comb_result2 = comb_result.title()
+        st.markdown(f"<h3 style='text-align: center;'>{genre2} {comb_result2}</h3>", unsafe_allow_html=True)
+
+        

@@ -113,7 +113,7 @@ def combined_sentiment(emotion, text_sentiment):
         ("Sad", "Negative"): "sad",
         ("Surprised", "Positive"): "surprised",
         ("Surprised", "Neutral"): "surprised",
-        ("Surprised", "Negative"): "Disbelief or disappointment and surprise",
+        ("Surprised", "Negative"): "disbelief or disappointment and surprise",
     }
 
     # Devolvemos el sentimiento combinado correspondiente:
